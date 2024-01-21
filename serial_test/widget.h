@@ -3,7 +3,7 @@
 #define WIDGET_H
 
 #include <QWidget>
-//#include "myserial.h"
+#include "myserial.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +22,23 @@ public:
     QStringList oldPortStringList;
 
     Ui::Widget *ui;
+
+    MySerial *serialTest;
+
+    void flashComPort();
+    void setBaudRate();
+    void setPortName();
+    void setStopBits();
+    void setDataBits();
+    void setParity();
+    void openCloseSw();
+    void sendData();
+    void showData();
+    void clearTx();
+    void clearRx();
+private slots:
+    void on_pushButton_clicked();
+
 private:
  // MySerial *serialTest;
 
