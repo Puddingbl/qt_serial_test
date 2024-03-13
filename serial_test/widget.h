@@ -4,7 +4,11 @@
 
 #include <QWidget>
 #include "myserial.h"
+#include <QLineEdit>
+#include <QGridLayout>
+#include <QFileDialog>
 
+#include "crc.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -36,11 +40,16 @@ public:
     void showData();
     void clearTx();
     void clearRx();
+
+    void open_file();
+    void updateFileWithCRC16();
+    QFile *file;
+
 private slots:
-    void on_pushButton_clicked();
+
 
 private:
- // MySerial *serialTest;
+
 
 };
 

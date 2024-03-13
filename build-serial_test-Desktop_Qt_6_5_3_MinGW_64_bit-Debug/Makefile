@@ -330,6 +330,7 @@ Makefile: ../serial_test/serial_test.pro ../../../../Application/QT/path/6.5.3/m
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/qt_config.prf \
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/win32-g++/qmake.conf \
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/toolchain.prf \
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/default_pre.prf \
@@ -360,7 +361,6 @@ Makefile: ../serial_test/serial_test.pro ../../../../Application/QT/path/6.5.3/m
 		../../../../Application/QT/path/6.5.3/mingw_64/lib/Qt6SerialPort.prl \
 		../../../../Application/QT/path/6.5.3/mingw_64/lib/Qt6Core.prl \
 		../../../../Application/QT/path/6.5.3/mingw_64/lib/Qt6EntryPoint.prl \
-		.qmake.stash \
 		../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile ..\serial_test\serial_test.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/spec_pre.prf:
@@ -623,6 +623,7 @@ Makefile: ../serial_test/serial_test.pro ../../../../Application/QT/path/6.5.3/m
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/qt_config.prf:
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/win32-g++/qmake.conf:
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/toolchain.prf:
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/default_pre.prf:
@@ -653,7 +654,6 @@ Makefile: ../serial_test/serial_test.pro ../../../../Application/QT/path/6.5.3/m
 ../../../../Application/QT/path/6.5.3/mingw_64/lib/Qt6SerialPort.prl:
 ../../../../Application/QT/path/6.5.3/mingw_64/lib/Qt6Core.prl:
 ../../../../Application/QT/path/6.5.3/mingw_64/lib/Qt6EntryPoint.prl:
-.qmake.stash:
 ../../../../Application/QT/path/6.5.3/mingw_64/mkspecs/features/build_pass.prf:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\serial_test\serial_test.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"

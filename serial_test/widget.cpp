@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QTimer>
 
+
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -58,6 +60,9 @@ Widget::Widget(QWidget *parent)
 
     //清空发送区数据
     connect(ui->btn_clear_tx, &QPushButton::clicked, this, &Widget::clearTx);
+
+    connect(ui->pushButton_3, &QPushButton::clicked, this, &Widget::open_file);
+    connect(ui->pushButton_4, &QPushButton::clicked, this, &Widget::updateFileWithCRC16);
 }
 
 Widget::~Widget()
@@ -66,13 +71,16 @@ Widget::~Widget()
         this->serialTest->mySerial->clear();
         this-> serialTest->mySerial->close();
     }
+    if (!this->file) {
+        free(this->file);
+    }
     qDebug()<<"串口已关闭";
 
     delete ui;
 }
 
 void Widget::flashComPort() {
-    qDebug() << "够钟了";
+    //qDebug() << "够钟了";
 
     QStringList newPortStringList;
 
@@ -149,6 +157,7 @@ void Widget::setParity() {
 void Widget::sendData() {
     QByteArray tx_buff =  this->ui->text_tx->toPlainText().toLocal8Bit(); // 为了发送中文
     this->serialTest->sendData(tx_buff);
+    this->ui->text_rx->append(tx_buff);
 }
 
 void Widget::showData() {
@@ -163,10 +172,67 @@ void Widget::clearRx() {
     this->ui->text_rx->clear();
 }
 
-void Widget::on_pushButton_clicked() {
-    unsigned char test[4] =  {0x01, 0x02, 0x03, 0x04};
-    QByteArray tx_buff = QByteArray::fromRawData((char *)test, sizeof(test));
+void Widget::open_file() {
+    QString fileName = QFileDialog::getOpenFileName(
+        this, tr("打开文件"),
+        "./", tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
 
-    this->serialTest->sendData(tx_buff);
+    this->file = new QFile(fileName);
 }
 
+void Widget::updateFileWithCRC16() {
+    QByteArray fileData;
+    image_header_t header;
+
+    // 获取另存文件的路径
+    QFileDialog fileDialog;
+    QString str = fileDialog.getSaveFileName(this, tr("另存文件"), this->file->fileName(), tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
+    QFile newFile(str);
+
+    fileData.clear();
+    // 重置数组大小且不填充
+    fileData.reserve(this->file->size()+sizeof(image_header_t));
+
+    // 不能以txt方式打开读写，不然会丢失\n等内容
+    if (!this->file->open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open the source file.";
+        return;
+    }
+
+    if (!newFile.open(QIODevice::WriteOnly)) {
+        qDebug() << "Failed to open the source file.";
+        return;
+    }
+
+    QDataStream in(this->file);
+    QDataStream out(&newFile);
+
+    // 读取原始文件内容
+    char data[this->file->size()];
+
+    // 用这种方式将文件内容写到QByteArray数组才不会丢失数据
+    in.readRawData(data, this->file->size());
+    qDebug() << "data.size:" << sizeof(data);
+    fileData.append(data, sizeof(data)); // 在数组末尾写入
+
+    // 计算CRC16
+    //quint16 crcValue = crc16_ccitt(fileData);
+    header.ih_hcrc = calculateCRC16(fileData);
+
+    // 在数组头部写入CRC16校验值
+    fileData.prepend(reinterpret_cast<const char*>(&header), sizeof(header));
+    qDebug() << "fileData.size:" << fileData.size();
+
+    // 把加入 image_header_t 的内容写入新另存的文件
+    out.writeRawData(reinterpret_cast<const char*>(fileData.data()), (this->file->size()+sizeof(image_header_t)));
+
+    newFile.close();
+    this->file->close();
+
+    //qDebug() << "crcValue:" << crcValue;
+    qDebug() << "header.ih_hcrc:" << header.ih_hcrc;
+
+    qDebug() << "fileData.size:" << fileData.size();
+    qDebug() << "file.size:" << this->file->size();
+    qDebug() << "copyFile.size:" << newFile.size();
+}
