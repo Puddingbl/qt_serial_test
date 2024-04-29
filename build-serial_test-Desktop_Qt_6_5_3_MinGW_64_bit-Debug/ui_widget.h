@@ -194,7 +194,7 @@ public:
         pushButton_4->setGeometry(QRect(320, 300, 75, 23));
         pushButton_5 = new QPushButton(Widget);
         pushButton_5->setObjectName("pushButton_5");
-        pushButton_5->setGeometry(QRect(230, 340, 75, 23));
+        pushButton_5->setGeometry(QRect(30, 360, 75, 23));
 
         retranslateUi(Widget);
 
@@ -243,7 +243,7 @@ public:
         pushButton_2->setText(QCoreApplication::translate("Widget", "\345\215\207\347\272\247app", nullptr));
         pushButton_3->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200\346\226\207\344\273\266", nullptr));
         pushButton_4->setText(QCoreApplication::translate("Widget", "\350\277\275\345\212\240crc", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("Widget", "\344\277\235\345\255\230", nullptr));
+        pushButton_5->setText(QCoreApplication::translate("Widget", "aesTest", nullptr));
     } // retranslateUi
 
 };

@@ -8,7 +8,9 @@
 #include <QGridLayout>
 #include <QFileDialog>
 
+#include "AES/qaesencryption.h"
 #include "crc.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -44,7 +46,9 @@ public:
     void open_file();
     void updateFileWithCRC16();
     QFile *file;
+    image_header_t header;
 
+    void aesTest();
 private slots:
 
 

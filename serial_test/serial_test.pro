@@ -12,12 +12,18 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AES/qaesencryption.cpp \
     crc.cpp \
     main.cpp \
     myserial.cpp \
     widget.cpp
 
 HEADERS += \
+    AES/aesni/aesni-enc-cbc.h \
+    AES/aesni/aesni-enc-ecb.h \
+    AES/aesni/aesni-key-exp.h \
+    AES/aesni/aesni-key-init.h \
+    AES/qaesencryption.h \
     crc.h \
     myserial.h \
     widget.h
