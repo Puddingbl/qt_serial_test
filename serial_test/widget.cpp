@@ -19,6 +19,16 @@ Widget::Widget(QWidget *parent)
     //QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC, QAESEncryption::PKCS7);
 
     //this->aes = new QAESEncryption();
+
+    ui->lineEditKey->setValidator(new QRegularExpressionValidator(QRegularExpression("^[A-Za-z0-9]+$")));
+    ui->lineEditKey->setMaxLength(16);
+    ui->lineEditIv->setValidator(new QRegularExpressionValidator(QRegularExpression("^[A-Za-z0-9]+$")));
+    ui->lineEditIv->setMaxLength(16);
+
+    // fileDataBuff.clear();
+    // // 重置数组大小且不填充
+    // fileDataBuff.reserve(this->file->size()+sizeof(image_header_t));
+
     this->serialTest = new MySerial(this);
     //获取串口
     //清除串口号
@@ -65,7 +75,8 @@ Widget::Widget(QWidget *parent)
 
     connect(ui->pushButton_3, &QPushButton::clicked, this, &Widget::open_file);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &Widget::updateFileWithCRC16);
-    connect(ui->pushButton_5, &QPushButton::clicked, this, &Widget::aesTest);
+    connect(ui->pushButton_5, &QPushButton::clicked, this, &Widget::updateFileWithAES);
+    connect(ui->pushButton_6, &QPushButton::clicked, this, &Widget::saveAs);
 }
 
 Widget::~Widget()
@@ -175,83 +186,16 @@ void Widget::clearRx() {
     this->ui->text_rx->clear();
 }
 
-void Widget::open_file() {
+void Widget::open_file() {   
     QString fileName = QFileDialog::getOpenFileName(
         this, tr("打开文件"),
         "./", tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
 
     this->file = new QFile(fileName);
 
-}
-
-void Widget::updateFileWithCRC16() {
-    QByteArray fileData;
-
-
-    // 获取另存文件的路径
-    QFileDialog fileDialog;
-    QString str = fileDialog.getSaveFileName(this, tr("另存文件"), this->file->fileName(), tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
-    QFile newFile(str);
-
-    fileData.clear();
+    fileDataBuff.clear();
     // 重置数组大小且不填充
-    fileData.reserve(this->file->size()+sizeof(image_header_t));
-
-    // 不能以txt方式打开读写，不然会丢失\n等内容
-    if (!this->file->open(QIODevice::ReadOnly)) {
-        qDebug() << "Failed to open the source file.";
-        return;
-    }
-
-    if (!newFile.open(QIODevice::WriteOnly)) {
-        qDebug() << "Failed to open the source file.";
-        return;
-    }
-
-    QDataStream in(this->file);
-    QDataStream out(&newFile);
-
-    // 读取原始文件内容
-    char data[this->file->size()];
-
-    // 用这种方式将文件内容写到QByteArray数组才不会丢失数据
-    in.readRawData(data, this->file->size());
-    qDebug() << "data.size:" << sizeof(data);
-    fileData.append(data, sizeof(data)); // 在数组末尾写入
-
-    // 计算CRC16
-    //quint16 crcValue = crc16_ccitt(fileData);
-    this->header.ih_hcrc = calculateCRC16(fileData);
-
-    // 在数组头部写入CRC16校验值
-    fileData.prepend(reinterpret_cast<const char*>(&this->header), sizeof(this->header));
-    qDebug() << "fileData.size:" << fileData.size();
-
-    // 把加入 image_header_t 的内容写入新另存的文件
-    out.writeRawData(reinterpret_cast<const char*>(fileData.data()), (this->file->size()+sizeof(image_header_t)));
-
-    newFile.close();
-    this->file->close();
-
-    //qDebug() << "crcValue:" << crcValue;
-    qDebug() << "header.ih_hcrc:" << this->header.ih_hcrc;
-
-    qDebug() << "fileData.size:" << fileData.size();
-    qDebug() << "file.size:" << this->file->size();
-    qDebug() << "copyFile.size:" << newFile.size();
-}
-
-void Widget::aesTest() {
-    QByteArray fileData;
-
-    // 获取另存文件的路径
-    QFileDialog fileDialog;
-    QString str = fileDialog.getSaveFileName(this, tr("另存文件"), this->file->fileName(), tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
-    QFile newFile(str);
-
-    fileData.clear();
-    // 重置数组大小且不填充
-    fileData.reserve(this->file->size()+sizeof(image_header_t));
+    fileDataBuff.reserve(this->file->size() + sizeof(image_header_t) + 16);
 
     // 不能以txt方式打开读写，不然会丢失\n等内容
     if (!this->file->open(QIODevice::ReadOnly)) {
@@ -266,67 +210,79 @@ void Widget::aesTest() {
     this->header.ih_size = this->file->size();
     // 用这种方式将文件内容写到QByteArray数组才不会丢失数据
     in.readRawData(data, this->file->size());
-    qDebug() << "data.size:" << sizeof(data);
-    fileData.append(data, sizeof(data)); // 在数组末尾写入
-    this->file->close();
 
+    QString str = "file.size:";
+    ui->textFileInfo->append(str + QString::number(sizeof(data)));
+    qDebug() << "data.size:" << sizeof(data);
+    fileDataBuff.append(data, sizeof(data)); // 在数组末尾写入
+    this->file->close();
+}
+
+void Widget::updateFileWithCRC16() {
+    // 计算CRC16
+    //quint16 crcValue = crc16_ccitt(fileData);
+     this->header.ih_hcrc = calculateCRC16(fileDataBuff);
+
+    // 在数组头部写入CRC16校验值
+    fileDataBuff.prepend(reinterpret_cast<const char*>(&this->header), sizeof(this->header));
+    qDebug() << "fileDataBuff.size:" << fileDataBuff.size();
+    // qDebug() << "fileDataBuff:" << fileDataBuff.toHex();
+
+    QString str = "header.ih_hcrc:";
+    ui->textFileInfo->append(str + QString::number(this->header.ih_hcrc));
+    str = "fileDataBuff.size:";
+    ui->textFileInfo->append(str + QString::number(fileDataBuff.size()));
+
+    //qDebug() << "crcValue:" << crcValue;
+    qDebug() << "header.ih_hcrc:" << this->header.ih_hcrc;
+    qDebug() << "fileDataBuff.size:" << fileDataBuff.size();
+}
+
+void Widget::updateFileWithAES() {
     QString key = "0123456789012345";
-    qDebug() << "key.size : " << key.toUtf8().size();
     QByteArray iv = QString("1234567812345678").toUtf8();
 
+    QString key_temp = this->ui->lineEditKey->text();
+    QString iv_temp = this->ui->lineEditIv->text();
+
+    if (key_temp.length() == 16) {
+        key = key_temp;
+
+        QString str = "key:";
+        ui->textFileInfo->append(str+key);
+        qDebug() << "Key: " << key;
+    }
+    if (iv_temp.length() == 16) {
+        iv = iv_temp.toUtf8();
+
+        QString str = "iv:";
+        ui->textFileInfo->append(str+iv);
+        qDebug() << "iv: " << iv;
+    }     
+
     QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC, QAESEncryption::PKCS7); // QAESEncryption::PKCS7 QAESEncryption::ZERO
+    QByteArray enBA = encryption.encode(fileDataBuff, key.toUtf8(), iv); //CBC模式（必须要有初始IV向量）
+    // qDebug() << "enBA: " << enBA;
 
-    QByteArray enBA = encryption.encode(fileData, key.toUtf8(), iv); //CBC模式（必须要有初始IV向量）
-    //QByteArray enBABase64 = enBA.toBase64();
-    //qDebug() << "fileData : " << fileData.data();
-    //qDebug() << "enBA : " << enBA;
+    fileDataBuff.clear();
+    fileDataBuff.append(enBA, enBA.size()); // 在数组末尾写入
+    // qDebug() << "fileDataBuff: " << fileDataBuff;
+    // qDebug() << "fileDataBuff: " << fileDataBuff.toHex();
+ }
 
+void Widget::saveAs() {
+    // 获取另存文件的路径
+    QFileDialog fileDialog;
+
+    QString str = fileDialog.getSaveFileName(this, tr("另存文件"), this->file->fileName(), tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
+    QFile newFile(str);
 
     if (!newFile.open(QIODevice::WriteOnly)) {
-        qDebug() << "Failed to open the source file.";
+        qDebug() << "Failed to open the new file.";
         return;
     }
     QDataStream out(&newFile);
-    out.writeRawData(reinterpret_cast<const char*>(enBA.data()), enBA.size());
+    out.writeRawData(reinterpret_cast<const char*>(fileDataBuff.data()), fileDataBuff.size());
 
     newFile.close();
-
-    if (!newFile.open(QIODevice::ReadOnly)) {
-        qDebug() << "Failed to open the source file.";
-        return;
-    }
-
-    QByteArray fileData1;
-
-    fileData1.clear();
-    // 重置数组大小且不填充
-    fileData1.reserve(newFile.size());
-    fileData1.append(newFile.readAll()); // 在数组末尾写入
-    newFile.close();
-
-    QByteArray deBA = encryption.decode(fileData1, key.toUtf8(), iv); //CBC模式（必须要有初始IV向量）
-    //qDebug() << "deBA : " << deBA;
-    //qDebug() << "fileData1 : " << fileData1.data();
-    //移除填充
-    //qDebug() << "deBA : " << QAESEncryption::RemovePadding(deBA, QAESEncryption::PKCS7);
-
-
-    // QString key = "0123456789012345";
-
-    // qDebug() << "key.size : " << key.toUtf8().size();
-
-    // QString string = "odfgoerhgeajgoierjhnao;jfoerihgoeraijgoerdfdfddf";
-
-    // QAESEncryption encryption(QAESEncryption::AES_128, QAESEncryption::CBC, QAESEncryption::PKCS7);
-    // QByteArray iv = QString("1234567812345678").toUtf8();
-    // QByteArray enBA = encryption.encode(string.toUtf8(), key.toUtf8(), iv); //CBC模式（必须要有初始IV向量）
-    // QByteArray enBABase64 = enBA.toBase64();
-
-    // qDebug() << "string : " << string;
-    // qDebug() << "enBA : " << enBABase64;
-
-    // enBA = QByteArray::fromBase64(enBABase64);
-    // QByteArray deBA = encryption.decode(enBA, key.toUtf8(), iv); //CBC模式（必须要有初始IV向量）
-    // //移除填充
-    // qDebug() << "deBA : " << QAESEncryption::RemovePadding(deBA, QAESEncryption::PKCS7);
 }

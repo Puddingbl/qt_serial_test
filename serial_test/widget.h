@@ -45,10 +45,15 @@ public:
 
     void open_file();
     void updateFileWithCRC16();
+    void aesTest();
+    void saveAs();
+
     QFile *file;
+
+    QByteArray fileDataBuff;
     image_header_t header;
 
-    void aesTest();
+
 private slots:
 
 
