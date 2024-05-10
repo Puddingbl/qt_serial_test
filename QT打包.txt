@@ -1,0 +1,6 @@
+1、将DEBUG模式改为release模式
+2、将生成的.exe文件拉到一个新文件夹
+3、在开始菜单找到并打开QT的命令行
+4、在命令行切换到.exe所在目录
+5、使用windeployqt命令，如.exe为test.exe，则输入windeployqt test.exe
+6、按下回车完成打包

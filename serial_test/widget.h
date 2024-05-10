@@ -45,7 +45,7 @@ public:
 
     void open_file();
     void updateFileWithCRC16();
-    void aesTest();
+    void updateFileWithAES();
     void saveAs();
 
     QFile *file;

@@ -204,17 +204,23 @@ void Widget::open_file() {
     }
 
     QDataStream in(this->file);
-
+    qDebug() << "die1";
     // 读取原始文件内容
-    char data[this->file->size()];
+    // char data[this->file->size()];
+    // char *data = (char *)malloc(this->file->size());
+    char *data = new char[this->file->size()];
+    qDebug() << "die2";
     this->header.ih_size = this->file->size();
     // 用这种方式将文件内容写到QByteArray数组才不会丢失数据
     in.readRawData(data, this->file->size());
-
+    qDebug() << "die3";
     QString str = "file.size:";
-    ui->textFileInfo->append(str + QString::number(sizeof(data)));
+    ui->textFileInfo->append(str + QString::number(this->file->size()));
+    qDebug() << "die3";
     qDebug() << "data.size:" << sizeof(data);
-    fileDataBuff.append(data, sizeof(data)); // 在数组末尾写入
+    fileDataBuff.append(data, this->file->size()); // 在数组末尾写入
+    delete[] data;
+    qDebug() << "die3";
     this->file->close();
 }
 
