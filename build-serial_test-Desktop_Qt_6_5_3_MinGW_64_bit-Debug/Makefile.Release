@@ -1721,7 +1721,9 @@ release/widget.o: ../serial_test/widget.cpp ../serial_test/widget.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QDebug \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QTimer \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qtimer.h \
-		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qbasictimer.h
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QSettings \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qsettings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\widget.o ..\serial_test\widget.cpp
 
 release/moc_qaesencryption.o: release/moc_qaesencryption.cpp 

@@ -7,7 +7,7 @@
 #include <QString>
 #include <QDebug>
 #include <QTimer>
-
+#include <QSettings>
 
 
 Widget::Widget(QWidget *parent)
@@ -186,10 +186,34 @@ void Widget::clearRx() {
     this->ui->text_rx->clear();
 }
 
-void Widget::open_file() {   
+
+void Widget::open_file() {
+    // 打开配置文件
+    QString config_path = qApp->applicationDirPath() + "/config/Setting.ini";
+    // 读配置文件信息
+    QSettings *pIniSet = new QSettings(config_path, QSettings::IniFormat);
+    // 读配置文件里的路径信息
+    QString lastPath = pIniSet->value("/LastPath/path").toString();
+
+    if (lastPath.isEmpty()) {
+        // 如果是空的，则用根目录
+        lastPath = "./";
+    }
+
+    // 打开文件
     QString fileName = QFileDialog::getOpenFileName(
         this, tr("打开文件"),
-        "./", tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
+        lastPath, tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
+
+    // 找到选中文件路径中最后一个斜杠的位置
+    int end = fileName.lastIndexOf("/");
+    // 提取选中文件路径中的目录部分
+    QString _path = fileName.left(end);
+    // 将上次访问的路径保存到配置文件中
+    pIniSet->setValue("/LastPath/path", _path);
+    delete pIniSet;
+    pIniSet = nullptr;
+
 
     this->file = new QFile(fileName);
 
