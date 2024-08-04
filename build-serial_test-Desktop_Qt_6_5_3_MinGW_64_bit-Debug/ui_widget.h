@@ -15,6 +15,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
@@ -46,24 +47,40 @@ public:
     QPushButton *btn_open;
     QPushButton *btn_clear_tx;
     QPushButton *btn_send;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
     QTabWidget *tabWidget;
     QWidget *tab;
     QVBoxLayout *verticalLayout;
     QTextBrowser *text_rx;
     QWidget *tab_2;
     QLabel *label_6;
+    QWidget *tab_3;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_4;
+    QPushButton *pushButton_5;
+    QWidget *widget_4;
+    QWidget *widget_3;
+    QLabel *label_7;
+    QLineEdit *lineEditKey;
+    QWidget *widget_2;
+    QLabel *label_8;
+    QLineEdit *lineEditIv;
+    QLabel *label_9;
+    QTextBrowser *textFileInfo;
+    QPushButton *pushButton_6;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName("Widget");
-        Widget->resize(440, 550);
+        Widget->resize(478, 413);
         text_tx = new QTextEdit(Widget);
         text_tx->setObjectName("text_tx");
-        text_tx->setGeometry(QRect(10, 200, 261, 71));
+        text_tx->setGeometry(QRect(200, 260, 261, 71));
         groupBox = new QGroupBox(Widget);
         groupBox->setObjectName("groupBox");
-        groupBox->setGeometry(QRect(280, 0, 143, 169));
+        groupBox->setGeometry(QRect(20, 10, 143, 169));
         gridLayout = new QGridLayout(groupBox);
         gridLayout->setObjectName("gridLayout");
         label_2 = new QLabel(groupBox);
@@ -133,7 +150,7 @@ public:
 
         widget = new QWidget(Widget);
         widget->setObjectName("widget");
-        widget->setGeometry(QRect(270, 200, 174, 72));
+        widget->setGeometry(QRect(10, 190, 174, 72));
         gridLayout_2 = new QGridLayout(widget);
         gridLayout_2->setObjectName("gridLayout_2");
         btn_clear_rx = new QPushButton(widget);
@@ -156,9 +173,15 @@ public:
 
         gridLayout_2->addWidget(btn_send, 1, 1, 1, 1);
 
+        pushButton = new QPushButton(Widget);
+        pushButton->setObjectName("pushButton");
+        pushButton->setGeometry(QRect(20, 270, 75, 23));
+        pushButton_2 = new QPushButton(Widget);
+        pushButton_2->setObjectName("pushButton_2");
+        pushButton_2->setGeometry(QRect(100, 270, 75, 23));
         tabWidget = new QTabWidget(Widget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(0, 0, 280, 191));
+        tabWidget->setGeometry(QRect(190, 10, 280, 231));
         tab = new QWidget();
         tab->setObjectName("tab");
         verticalLayout = new QVBoxLayout(tab);
@@ -175,10 +198,52 @@ public:
         label_6->setObjectName("label_6");
         label_6->setGeometry(QRect(20, 10, 241, 141));
         tabWidget->addTab(tab_2, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName("tab_3");
+        pushButton_3 = new QPushButton(tab_3);
+        pushButton_3->setObjectName("pushButton_3");
+        pushButton_3->setGeometry(QRect(10, 10, 75, 23));
+        pushButton_4 = new QPushButton(tab_3);
+        pushButton_4->setObjectName("pushButton_4");
+        pushButton_4->setGeometry(QRect(10, 70, 75, 41));
+        pushButton_5 = new QPushButton(tab_3);
+        pushButton_5->setObjectName("pushButton_5");
+        pushButton_5->setGeometry(QRect(10, 40, 75, 23));
+        widget_4 = new QWidget(tab_3);
+        widget_4->setObjectName("widget_4");
+        widget_4->setGeometry(QRect(100, 10, 161, 101));
+        widget_3 = new QWidget(widget_4);
+        widget_3->setObjectName("widget_3");
+        widget_3->setGeometry(QRect(0, 40, 161, 21));
+        label_7 = new QLabel(widget_3);
+        label_7->setObjectName("label_7");
+        label_7->setGeometry(QRect(10, 0, 21, 16));
+        lineEditKey = new QLineEdit(widget_3);
+        lineEditKey->setObjectName("lineEditKey");
+        lineEditKey->setGeometry(QRect(40, 0, 113, 21));
+        widget_2 = new QWidget(widget_4);
+        widget_2->setObjectName("widget_2");
+        widget_2->setGeometry(QRect(0, 70, 161, 41));
+        label_8 = new QLabel(widget_2);
+        label_8->setObjectName("label_8");
+        label_8->setGeometry(QRect(10, 10, 16, 16));
+        lineEditIv = new QLineEdit(widget_2);
+        lineEditIv->setObjectName("lineEditIv");
+        lineEditIv->setGeometry(QRect(40, 10, 113, 21));
+        label_9 = new QLabel(widget_4);
+        label_9->setObjectName("label_9");
+        label_9->setGeometry(QRect(60, 10, 53, 15));
+        textFileInfo = new QTextBrowser(tab_3);
+        textFileInfo->setObjectName("textFileInfo");
+        textFileInfo->setGeometry(QRect(95, 130, 171, 71));
+        pushButton_6 = new QPushButton(tab_3);
+        pushButton_6->setObjectName("pushButton_6");
+        pushButton_6->setGeometry(QRect(10, 120, 75, 23));
+        tabWidget->addTab(tab_3, QString());
 
         retranslateUi(Widget);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -186,7 +251,7 @@ public:
 
     void retranslateUi(QWidget *Widget)
     {
-        Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
+        Widget->setWindowTitle(QCoreApplication::translate("Widget", "PuttingblAide", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Widget", "\344\270\262\345\217\243\350\256\276\347\275\256", nullptr));
         label_2->setText(QCoreApplication::translate("Widget", "\344\270\262\345\217\243\351\200\211\346\213\251", nullptr));
         label->setText(QCoreApplication::translate("Widget", "\346\263\242\347\211\271\347\216\207", nullptr));
@@ -216,9 +281,20 @@ public:
         btn_open->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200", nullptr));
         btn_clear_tx->setText(QCoreApplication::translate("Widget", "\346\270\205\351\231\244\345\217\221\351\200\201", nullptr));
         btn_send->setText(QCoreApplication::translate("Widget", "\345\217\221\351\200\201", nullptr));
+        pushButton->setText(QCoreApplication::translate("Widget", "\345\244\215\344\275\215", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("Widget", "\345\215\207\347\272\247app", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Widget", "\346\225\260\346\215\256", nullptr));
         label_6->setText(QCoreApplication::translate("Widget", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Widget", "\345\233\276\345\203\217", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200\346\226\207\344\273\266", nullptr));
+        pushButton_4->setText(QCoreApplication::translate("Widget", "\346\267\273\345\212\240\345\244\264\351\203\250\n"
+"\344\277\241\346\201\257", nullptr));
+        pushButton_5->setText(QCoreApplication::translate("Widget", "aes\345\212\240\345\257\206", nullptr));
+        label_7->setText(QCoreApplication::translate("Widget", "key", nullptr));
+        label_8->setText(QCoreApplication::translate("Widget", "iv", nullptr));
+        label_9->setText(QCoreApplication::translate("Widget", "AES \351\205\215\347\275\256", nullptr));
+        pushButton_6->setText(QCoreApplication::translate("Widget", "\346\226\207\344\273\266\345\217\246\345\255\230", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Widget", "\346\226\207\344\273\266\345\244\204\347\220\206", nullptr));
     } // retranslateUi
 
 };

@@ -4,6 +4,12 @@
 
 #include <QWidget>
 #include "myserial.h"
+#include <QLineEdit>
+#include <QGridLayout>
+#include <QFileDialog>
+
+#include "AES/qaesencryption.h"
+#include "crc.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -36,11 +42,23 @@ public:
     void showData();
     void clearTx();
     void clearRx();
+
+    void open_file();
+    void updateFileWithCRC16();
+    void updateFileWithAES();
+    void saveAs();
+
+    QFile *file;
+
+    QByteArray fileDataBuff;
+    image_header_t header;
+
+
 private slots:
-    void on_pushButton_clicked();
+
 
 private:
- // MySerial *serialTest;
+
 
 };
 
