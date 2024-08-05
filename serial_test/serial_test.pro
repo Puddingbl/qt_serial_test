@@ -16,6 +16,7 @@ CONFIG += c++17
 SOURCES += \
     AES/qaesencryption.cpp \
     crc.cpp \
+    iap/iap.cpp \
     main.cpp \
     userSerial.cpp \
     widget.cpp
@@ -27,6 +28,7 @@ HEADERS += \
     AES/aesni/aesni-key-init.h \
     AES/qaesencryption.h \
     crc.h \
+    iap/iap.h \
     userSerial.h \
     widget.h
 

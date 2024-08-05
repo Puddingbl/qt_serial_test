@@ -1,6 +1,6 @@
 
-#ifndef MYSERIAL_H
-#define MYSERIAL_H
+#ifndef USERSERIAL_H
+#define USERSERIAL_H
 
 
 #include <QWidget>
@@ -12,14 +12,14 @@
 #include <QString>
 
 
-class userSerial : public Widget
+class UserSerial : public Widget
 {
     Q_OBJECT
 
 public:
 
-    explicit userSerial(Widget *parent = nullptr);
-    ~userSerial();
+    explicit UserSerial(Widget *parent = nullptr);
+    ~UserSerial();
 
 
     QSerialPort *mySerial; // 串口类指针

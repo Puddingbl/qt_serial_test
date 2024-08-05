@@ -274,6 +274,10 @@ public:
         pushButton_2->setObjectName("pushButton_2");
         pushButton_2->setGeometry(QRect(100, 110, 75, 23));
         comboBox_Port_2 = new QComboBox(widget_5);
+        comboBox_Port_2->addItem(QString());
+        comboBox_Port_2->addItem(QString());
+        comboBox_Port_2->addItem(QString());
+        comboBox_Port_2->addItem(QString());
         comboBox_Port_2->setObjectName("comboBox_Port_2");
         comboBox_Port_2->setGeometry(QRect(80, 10, 69, 21));
         label_10 = new QLabel(widget_5);
@@ -330,7 +334,7 @@ public:
 
         retranslateUi(Widget);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Widget);
@@ -382,6 +386,11 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Widget", "\346\226\207\344\273\266\345\244\204\347\220\206", nullptr));
         pushButton_8->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200\346\226\207\344\273\266", nullptr));
         pushButton_2->setText(QCoreApplication::translate("Widget", "\345\274\200\345\247\213\345\215\207\347\272\247", nullptr));
+        comboBox_Port_2->setItemText(0, QCoreApplication::translate("Widget", "\344\270\262\345\217\243", nullptr));
+        comboBox_Port_2->setItemText(1, QCoreApplication::translate("Widget", "\350\223\235\347\211\231", nullptr));
+        comboBox_Port_2->setItemText(2, QCoreApplication::translate("Widget", "WiFi", nullptr));
+        comboBox_Port_2->setItemText(3, QCoreApplication::translate("Widget", "USB-HID", nullptr));
+
         label_10->setText(QCoreApplication::translate("Widget", "\350\277\236\346\216\245\346\226\271\345\274\217", nullptr));
         label_11->setText(QCoreApplication::translate("Widget", "\346\226\207\344\273\266\345\220\215\347\247\260", nullptr));
         label_12->setText(QCoreApplication::translate("Widget", "\346\226\207\344\273\266\347\211\210\346\234\254", nullptr));

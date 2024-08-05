@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QTimer>
 
-userSerial::userSerial(Widget *parent)
+UserSerial::UserSerial(Widget *parent)
     : Widget{parent}
 {
     // mySerial =new  QSerialPort;
@@ -37,35 +37,35 @@ userSerial::userSerial(Widget *parent)
     timer1->start(500);
 
     //定时刷新串口列表
-    connect(timer1, &QTimer::timeout, this, &userSerial::flashComPort);
+    connect(timer1, &QTimer::timeout, this, &UserSerial::flashComPort);
 
     // 获取串口设置改变值
-    connect(ui->comboBox_Baud, &QComboBox::textActivated, this,  &userSerial::setBaudRate);
-    connect(ui->comboBox_Port, &QComboBox::currentTextChanged, this, &userSerial::setPortName);
-    connect(ui->comboBox_Stop, &QComboBox::currentTextChanged, this, &userSerial::setStopBits);
-    connect(ui->comboBox_DataBit, &QComboBox::currentTextChanged, this, &userSerial::setDataBits);
-    connect(ui->comboBox_Varity, &QComboBox::currentTextChanged, this, &userSerial::setParity);
+    connect(ui->comboBox_Baud, &QComboBox::textActivated, this,  &UserSerial::setBaudRate);
+    connect(ui->comboBox_Port, &QComboBox::currentTextChanged, this, &UserSerial::setPortName);
+    connect(ui->comboBox_Stop, &QComboBox::currentTextChanged, this, &UserSerial::setStopBits);
+    connect(ui->comboBox_DataBit, &QComboBox::currentTextChanged, this, &UserSerial::setDataBits);
+    connect(ui->comboBox_Varity, &QComboBox::currentTextChanged, this, &UserSerial::setParity);
 
     //设置打开串口按键
-    connect(ui->btn_open, &QPushButton::clicked, this, &userSerial::onOpenCloseButtonClicked);
+    connect(ui->btn_open, &QPushButton::clicked, this, &UserSerial::onOpenCloseButtonClicked);
 
     // 发送数据
-    connect(ui->btn_send, &QPushButton::clicked, this, &userSerial::sendData);
+    connect(ui->btn_send, &QPushButton::clicked, this, &UserSerial::sendData);
 
     //接收并显示数据
-    connect(mySerial, &QSerialPort::readyRead, this, &userSerial::showData);
+    connect(mySerial, &QSerialPort::readyRead, this, &UserSerial::showData);
 
     //清空接收区数据
-    connect(ui->btn_clear_rx, &QPushButton::clicked, this, &userSerial::clearRx);
+    connect(ui->btn_clear_rx, &QPushButton::clicked, this, &UserSerial::clearRx);
 
     //清空发送区数据
-    connect(ui->btn_clear_tx, &QPushButton::clicked, this, &userSerial::clearTx);
+    connect(ui->btn_clear_tx, &QPushButton::clicked, this, &UserSerial::clearTx);
 
 
     qDebug() << "串口构造";
 }
 
-userSerial::~userSerial()
+UserSerial::~UserSerial()
 {
     if (mySerial->isOpen()) {
         mySerial->clear();
@@ -75,7 +75,7 @@ userSerial::~userSerial()
     qDebug()<<"串口已关闭";
 }
 
-void userSerial::flashComPort() {
+void UserSerial::flashComPort() {
     //qDebug() << "够钟了";
 
     QStringList newPortStringList;
@@ -93,7 +93,7 @@ void userSerial::flashComPort() {
     }
 }
 
-void userSerial::onOpenCloseButtonClicked(void) {
+void UserSerial::onOpenCloseButtonClicked(void) {
     if(openFlag) {
         // if (mySerial->isOpen()) {
         if (mySerial->open(QIODevice::ReadWrite)) {
@@ -115,14 +115,14 @@ void userSerial::onOpenCloseButtonClicked(void) {
     }
 }
 
-void userSerial::setBaudRate(void) {
+void UserSerial::setBaudRate(void) {
     QString str1 = ui->comboBox_Baud->currentText();
 
     qDebug() << "选择了:"<<str1.toUtf8().data();
     mySerial->setBaudRate(str1.toInt());
 }
 
-void userSerial::setPortName(void) {
+void UserSerial::setPortName(void) {
     QString str1 = ui->comboBox_Port->currentText();
     qDebug() << "选择了:"<<str1.toUtf8().data();
     //        const QString portnameStr = ui->comboBox_Port->currentText();
@@ -130,7 +130,7 @@ void userSerial::setPortName(void) {
     mySerial->setPortName(str1);
 }
 
-void userSerial::setStopBits(void) {
+void UserSerial::setStopBits(void) {
     QString str1 = ui->comboBox_Stop->currentText();
     qDebug() << "选择了:"<<str1.toUtf8().data();
 
@@ -143,7 +143,7 @@ void userSerial::setStopBits(void) {
     qDebug() << bit;
 }
 
-void userSerial::setDataBits(void) {
+void UserSerial::setDataBits(void) {
     QString str1 = ui->comboBox_DataBit->currentText();
     qDebug() << "选择了:"<<str1.toUtf8().data();
 
@@ -158,7 +158,7 @@ void userSerial::setDataBits(void) {
         mySerial->setDataBits(QSerialPort::Data5);
 }
 
-void userSerial::setParity(void) {
+void UserSerial::setParity(void) {
     QString str1 = ui->comboBox_Varity->currentText();
     qDebug() << "选择了:"<<str1.toUtf8().data();
 
@@ -171,10 +171,11 @@ void userSerial::setParity(void) {
         mySerial->setParity(QSerialPort::EvenParity);
 }
 
-void userSerial::sendData(void) {
+void UserSerial::sendData(void) {
     QByteArray tx_buff =  ui->text_tx->toPlainText().toLocal8Bit(); // 为了发送中文
 
     if (mySerial->isOpen()) {
+        // tx_buff.append("\r\n");
         mySerial->write(tx_buff);
         qDebug()<<"已发送："<<QString::fromUtf8(tx_buff);
     }
@@ -183,12 +184,9 @@ void userSerial::sendData(void) {
         // mySerial->clearError();
     }
     ui->text_rx->append(QString::fromLocal8Bit(tx_buff));
-    // 测试
-    // ui->text_rx->append(QString::fromUtf8(tx_buff));
-    // qDebug()<<"已接收："<<QString::fromUtf8(tx_buff);
 }
 
-void userSerial::showData(void) {
+void UserSerial::showData(void) {
     QByteArray rx_buff;
 
     if (mySerial->bytesAvailable()) {
@@ -202,11 +200,11 @@ void userSerial::showData(void) {
     }
 }
 
-void userSerial::clearTx() {
+void UserSerial::clearTx() {
     ui->text_tx->clear();
 }
 
-void userSerial::clearRx() {
+void UserSerial::clearRx() {
     ui->text_rx->clear();
 }
 

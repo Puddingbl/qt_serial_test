@@ -37,9 +37,9 @@ QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
 
 #ifdef QT_MOC_HAS_STRINGDATA
-struct qt_meta_stringdata_CLASSuserSerialENDCLASS_t {};
-static constexpr auto qt_meta_stringdata_CLASSuserSerialENDCLASS = QtMocHelpers::stringData(
-    "userSerial",
+struct qt_meta_stringdata_CLASSUserSerialENDCLASS_t {};
+static constexpr auto qt_meta_stringdata_CLASSUserSerialENDCLASS = QtMocHelpers::stringData(
+    "UserSerial",
     "onOpenCloseButtonClicked",
     "",
     "setBaudRate",
@@ -53,7 +53,7 @@ static constexpr auto qt_meta_stringdata_CLASSuserSerialENDCLASS = QtMocHelpers:
     "clearRx"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
-struct qt_meta_stringdata_CLASSuserSerialENDCLASS_t {
+struct qt_meta_stringdata_CLASSUserSerialENDCLASS_t {
     uint offsetsAndSizes[24];
     char stringdata0[11];
     char stringdata1[25];
@@ -69,10 +69,10 @@ struct qt_meta_stringdata_CLASSuserSerialENDCLASS_t {
     char stringdata11[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
-    uint(sizeof(qt_meta_stringdata_CLASSuserSerialENDCLASS_t::offsetsAndSizes) + ofs), len 
-Q_CONSTINIT static const qt_meta_stringdata_CLASSuserSerialENDCLASS_t qt_meta_stringdata_CLASSuserSerialENDCLASS = {
+    uint(sizeof(qt_meta_stringdata_CLASSUserSerialENDCLASS_t::offsetsAndSizes) + ofs), len 
+Q_CONSTINIT static const qt_meta_stringdata_CLASSUserSerialENDCLASS_t qt_meta_stringdata_CLASSUserSerialENDCLASS = {
     {
-        QT_MOC_LITERAL(0, 10),  // "userSerial"
+        QT_MOC_LITERAL(0, 10),  // "UserSerial"
         QT_MOC_LITERAL(11, 24),  // "onOpenCloseButtonClicked"
         QT_MOC_LITERAL(36, 0),  // ""
         QT_MOC_LITERAL(37, 11),  // "setBaudRate"
@@ -85,7 +85,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSuserSerialENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(113, 7),  // "clearTx"
         QT_MOC_LITERAL(121, 7)   // "clearRx"
     },
-    "userSerial",
+    "UserSerial",
     "onOpenCloseButtonClicked",
     "",
     "setBaudRate",
@@ -102,7 +102,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSuserSerialENDCLASS_t qt_meta_st
 #endif // !QT_MOC_HAS_STRING_DATA
 } // unnamed namespace
 
-Q_CONSTINIT static const uint qt_meta_data_CLASSuserSerialENDCLASS[] = {
+Q_CONSTINIT static const uint qt_meta_data_CLASSUserSerialENDCLASS[] = {
 
  // content:
       11,       // revision
@@ -142,15 +142,15 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSuserSerialENDCLASS[] = {
        0        // eod
 };
 
-Q_CONSTINIT const QMetaObject userSerial::staticMetaObject = { {
+Q_CONSTINIT const QMetaObject UserSerial::staticMetaObject = { {
     QMetaObject::SuperData::link<Widget::staticMetaObject>(),
-    qt_meta_stringdata_CLASSuserSerialENDCLASS.offsetsAndSizes,
-    qt_meta_data_CLASSuserSerialENDCLASS,
+    qt_meta_stringdata_CLASSUserSerialENDCLASS.offsetsAndSizes,
+    qt_meta_data_CLASSUserSerialENDCLASS,
     qt_static_metacall,
     nullptr,
-    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSuserSerialENDCLASS_t,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSUserSerialENDCLASS_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<userSerial, std::true_type>,
+        QtPrivate::TypeAndForceComplete<UserSerial, std::true_type>,
         // method 'onOpenCloseButtonClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'setBaudRate'
@@ -175,10 +175,10 @@ Q_CONSTINIT const QMetaObject userSerial::staticMetaObject = { {
     nullptr
 } };
 
-void userSerial::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void UserSerial::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<userSerial *>(_o);
+        auto *_t = static_cast<UserSerial *>(_o);
         (void)_t;
         switch (_id) {
         case 0: _t->onOpenCloseButtonClicked(); break;
@@ -197,20 +197,20 @@ void userSerial::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     (void)_a;
 }
 
-const QMetaObject *userSerial::metaObject() const
+const QMetaObject *UserSerial::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *userSerial::qt_metacast(const char *_clname)
+void *UserSerial::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_CLASSuserSerialENDCLASS.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_CLASSUserSerialENDCLASS.stringdata0))
         return static_cast<void*>(this);
     return Widget::qt_metacast(_clname);
 }
 
-int userSerial::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int UserSerial::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = Widget::qt_metacall(_c, _id, _a);
     if (_id < 0)

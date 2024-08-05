@@ -28,7 +28,6 @@ Widget::Widget(QWidget *parent)
     // // 重置数组大小且不填充
     // fileDataBuff.reserve(this->file->size()+sizeof(image_header_t));
 
-    // this->serialTest = new MySerial(this);
 
     connect(ui->pushButton_3, &QPushButton::clicked, this, &Widget::open_file);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &Widget::updateFileWithCRC16);

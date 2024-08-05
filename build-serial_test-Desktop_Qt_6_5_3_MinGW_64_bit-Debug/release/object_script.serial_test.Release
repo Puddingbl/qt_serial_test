@@ -1,0 +1,10 @@
+release/qaesencryption.o
+release/crc.o
+release/iap.o
+release/main.o
+release/userSerial.o
+release/widget.o
+release/moc_qaesencryption.o
+release/moc_iap.o
+release/moc_userSerial.o
+release/moc_widget.o
