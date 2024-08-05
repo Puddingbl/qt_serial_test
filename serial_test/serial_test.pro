@@ -17,7 +17,7 @@ SOURCES += \
     AES/qaesencryption.cpp \
     crc.cpp \
     main.cpp \
-    myserial.cpp \
+    userSerial.cpp \
     widget.cpp
 
 HEADERS += \
@@ -27,7 +27,7 @@ HEADERS += \
     AES/aesni/aesni-key-init.h \
     AES/qaesencryption.h \
     crc.h \
-    myserial.h \
+    userSerial.h \
     widget.h
 
 FORMS += \

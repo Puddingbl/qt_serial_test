@@ -3,7 +3,7 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include "myserial.h"
+// #include "myserial.h"
 #include <QLineEdit>
 #include <QGridLayout>
 #include <QFileDialog>
@@ -25,13 +25,13 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
-    QStringList oldPortStringList;
+
 
     Ui::Widget *ui;
 
-    MySerial *serialTest;
+    // MySerial *serialTest;
 
-    void flashComPort();
+    // void flashComPort();
     void setBaudRate();
     void setPortName();
     void setStopBits();
