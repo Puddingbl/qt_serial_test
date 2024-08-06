@@ -1,5 +1,5 @@
 #include "iap.h"
-
+#include <QSettings>
 
 Iap::Iap(Widget *parent)
     : UserSerial{parent}
@@ -15,7 +15,8 @@ Iap::Iap(Widget *parent)
     ui->lineEdit_5->setReadOnly(true);
 
     connect(ui->pushButton_2, &QPushButton::clicked, this, &Iap::iapStart);
-    qDebug()<<"长度："<< sizeof("name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name");
+    connect(ui->pushButton_8, &QPushButton::clicked, this, &Iap::open_file);
+    qDebug() << "len:" << strlen("name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name");
 }
 
 
@@ -60,6 +61,7 @@ bool Iap::parseAndPrintFields(const QString &data) {
                 qDebug() << "Protocol:" << value;
                 ui->lineEdit_3->setText(value);
             } else if (key == "packLen") {
+                //packLen = value;
                 qDebug() << "Packet Length:" << value;
                 ui->lineEdit_4->setText(value);
             } else if (key == "verif") {
@@ -88,9 +90,13 @@ void Iap::iapReadCommParam(void) {
         connect(mySerial, &QSerialPort::readyRead, this, &Iap::iapReadData);
 
         /* 控制字符 */
-        QString startHexString = "01"; // 十六进制表示
-        QByteArray byteArray = QByteArray::fromHex(startHexString.toUtf8());
+        // QString startHexString = "01"; // 十六进制表示
+        // QByteArray byteArray = QByteArray::fromHex(startHexString.toUtf8());
 
+        quint8 startChar = 0x01;
+        QByteArray byteArray;
+
+        byteArray.append(startChar);
         /* 帧计数 */
         byteArray.append(packCnt++);
 
@@ -106,28 +112,133 @@ void Iap::iapReadCommParam(void) {
     }
 }
 
+int len2 = 0;
 void Iap::iapReadData(void) {
     QByteArray rx_buff;
 
     if (mySerial->bytesAvailable()) {
         rx_buff = mySerial->readAll();
-        qDebug()<< "已接收：" << rx_buff;
+        qDebug()<< "已接收：" << rx_buff.toHex();
+
+        if (endFlag == true) {
+            connect(mySerial, &QSerialPort::readyRead, this, &UserSerial::showData);
+            disconnect(mySerial, &QSerialPort::readyRead, this, &Iap::iapReadData);
+
+            QByteArray endArray;
+            quint8 startChar = 0x04;
+
+            endArray.append(startChar);
+
+            mySerial->write(endArray);
+
+            qDebug() << "结束捏";
+        }
 
         /* 收到下一帧数据请求 */
         if (!rx_buff.isEmpty() && rx_buff.at(0) == 0x43) {
+
             qDebug() << "okkkk";
 
-            QString startHexString = "02"; // 十六进制表示
-            QByteArray byteArray = QByteArray::fromHex(startHexString.toUtf8());
+            // if (endFlag == true) {
+            //     return;
+            // }
 
+
+            QByteArray byteArray;
+            quint8 startChar = 0x02;
+
+            byteArray.append(startChar);
             byteArray.append(packCnt++);
 
-            byteArray.append("name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name");
+            int bytesRead = qMin(packLen - 4, fileSize - offset);
+            byteArray.append(fileDataBuff.mid(offset, bytesRead));
+
+            if (bytesRead < (packLen - 4)) {
+                QByteArray fillArray;
+                int count = packLen - 4 - bytesRead;
+                qDebug() << "count：" << count;
+
+                fillArray.fill(static_cast<char>(0xaa), count);
+
+                byteArray.append(fillArray);
+                endFlag = true;
+            }
+            offset += bytesRead;
+
             quint16 crc = calculateCRC16(byteArray);
             byteArray.append(crc >> 8);
             byteArray.append(crc);
 
+            qDebug() << "crc:" << crc;
+
             mySerial->write(byteArray);
+
+            // qDebug() << "byteArray:" << byteArray;
+            qDebug() << "-------------------";
         }
     }
 }
+
+
+void Iap::open_file() {
+    // 打开配置文件
+    QString config_path = qApp->applicationDirPath() + "/config/Setting.ini";
+    // 读配置文件信息
+    QSettings *pIniSet = new QSettings(config_path, QSettings::IniFormat);
+    // 读配置文件里的路径信息
+    QString lastPath = pIniSet->value("/LastPath/path").toString();
+
+    if (lastPath.isEmpty()) {
+        // 如果是空的，则用根目录
+        lastPath = "./";
+    }
+
+    // 打开文件
+    QString fileName = QFileDialog::getOpenFileName(
+        this, tr("打开文件"),
+        lastPath, tr("bin files(*.bin);;hex files(*.hex);;All files (*.*)"));
+
+    // 找到选中文件路径中最后一个斜杠的位置
+    int end = fileName.lastIndexOf("/");
+    // 提取选中文件路径中的目录部分
+    QString _path = fileName.left(end);
+    // 将上次访问的路径保存到配置文件中
+    pIniSet->setValue("/LastPath/path", _path);
+    delete pIniSet;
+    pIniSet = nullptr;
+
+
+    this->file = new QFile(fileName);
+
+    fileDataBuff.clear();
+    // // 重置数组大小且不填充
+    // fileDataBuff.reserve(this->file->size() + sizeof(image_header_t) + 16);
+
+    // 不能以txt方式打开读写，不然会丢失\n等内容
+    if (!this->file->open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open the source file.";
+        return;
+    }
+
+    QDataStream in(this->file);
+
+    // 读取原始文件内容
+    // char data[this->file->size()];
+    // char *data = (char *)malloc(this->file->size());
+    char *data = new char[this->file->size()];
+
+    this->header.ih_size = this->file->size();
+    // 用这种方式将文件内容写到QByteArray数组才不会丢失数据
+    in.readRawData(data, this->file->size());
+
+    QString str = "file.size:";
+    ui->textFileInfo->append(str + QString::number(this->file->size()));
+
+    fileSize = this->file->size();
+    qDebug() << "data.size:" << this->file->size();
+    fileDataBuff.append(data, this->file->size()); // 在数组末尾写入
+    delete[] data;
+
+    this->file->close();
+}
+

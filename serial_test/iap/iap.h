@@ -15,12 +15,21 @@ public:
     bool parseAndPrintFields(const QString &data);
 private:
     quint8 packCnt = 0;
+    QByteArray fileDataBuff;
+    int fileSize = 0;
+    int startPosition = 0;
+    int offset = 0;
+    int packLen = 128;
+
+    bool endFlag = false;
+
 
 
 public slots:
     void iapStart(void);
     void iapReadCommParam(void);
     void iapReadData(void);
+    void open_file(void);
 
 signals:
 
