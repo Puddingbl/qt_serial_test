@@ -23,6 +23,7 @@ private:
 
     bool endFlag = false;
 
+    int pack_cnt = 0;
 
 
 public slots:
@@ -30,6 +31,7 @@ public slots:
     void iapReadCommParam(void);
     void iapReadData(void);
     void open_file(void);
+    void iapVB(void);
 
 signals:
 

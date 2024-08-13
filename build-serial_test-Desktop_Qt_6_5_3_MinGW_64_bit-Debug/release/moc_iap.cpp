@@ -44,17 +44,19 @@ static constexpr auto qt_meta_stringdata_CLASSIapENDCLASS = QtMocHelpers::string
     "",
     "iapReadCommParam",
     "iapReadData",
-    "open_file"
+    "open_file",
+    "iapVB"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSIapENDCLASS_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[14];
     char stringdata0[4];
     char stringdata1[9];
     char stringdata2[1];
     char stringdata3[17];
     char stringdata4[12];
     char stringdata5[10];
+    char stringdata6[6];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSIapENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -65,14 +67,16 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSIapENDCLASS_t qt_meta_stringdat
         QT_MOC_LITERAL(13, 0),  // ""
         QT_MOC_LITERAL(14, 16),  // "iapReadCommParam"
         QT_MOC_LITERAL(31, 11),  // "iapReadData"
-        QT_MOC_LITERAL(43, 9)   // "open_file"
+        QT_MOC_LITERAL(43, 9),  // "open_file"
+        QT_MOC_LITERAL(53, 5)   // "iapVB"
     },
     "Iap",
     "iapStart",
     "",
     "iapReadCommParam",
     "iapReadData",
-    "open_file"
+    "open_file",
+    "iapVB"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -84,7 +88,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSIapENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,12 +96,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSIapENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   38,    2, 0x0a,    1 /* Public */,
-       3,    0,   39,    2, 0x0a,    2 /* Public */,
-       4,    0,   40,    2, 0x0a,    3 /* Public */,
-       5,    0,   41,    2, 0x0a,    4 /* Public */,
+       1,    0,   44,    2, 0x0a,    1 /* Public */,
+       3,    0,   45,    2, 0x0a,    2 /* Public */,
+       4,    0,   46,    2, 0x0a,    3 /* Public */,
+       5,    0,   47,    2, 0x0a,    4 /* Public */,
+       6,    0,   48,    2, 0x0a,    5 /* Public */,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -122,6 +128,8 @@ Q_CONSTINIT const QMetaObject Iap::staticMetaObject = { {
         // method 'iapReadData'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'open_file'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'iapVB'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -137,6 +145,7 @@ void Iap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         case 1: _t->iapReadCommParam(); break;
         case 2: _t->iapReadData(); break;
         case 3: _t->open_file(); break;
+        case 4: _t->iapVB(); break;
         default: ;
         }
     }
@@ -162,13 +171,13 @@ int Iap::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }
