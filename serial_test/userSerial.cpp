@@ -41,7 +41,7 @@ UserSerial::UserSerial(Widget *parent)
 
     // 获取串口设置改变值
     connect(ui->comboBox_Baud, &QComboBox::textActivated, this,  &UserSerial::setBaudRate);
-    connect(ui->comboBox_Port, &QComboBox::currentTextChanged, this, &UserSerial::setPortName);
+    connect(ui->comboBox_Port, &QComboBox::textActivated, this, &UserSerial::setPortName);
     connect(ui->comboBox_Stop, &QComboBox::currentTextChanged, this, &UserSerial::setStopBits);
     connect(ui->comboBox_DataBit, &QComboBox::currentTextChanged, this, &UserSerial::setDataBits);
     connect(ui->comboBox_Varity, &QComboBox::currentTextChanged, this, &UserSerial::setParity);
@@ -70,6 +70,7 @@ UserSerial::~UserSerial()
     if (mySerial->isOpen()) {
         mySerial->clear();
         mySerial->close();
+        free(mySerial);
     }
 
     qDebug()<<"串口已关闭";
@@ -102,7 +103,8 @@ void UserSerial::onOpenCloseButtonClicked(void) {
             qDebug()<<"串口已打开,读写模式";
         }
         else {
-            qDebug() << "串口打开异常："<<mySerial->errorString().toUtf8().data();
+            qDebug() << "串口打开异常："<< mySerial->errorString().toUtf8().data();
+            // qDebug() << "串口名："<< mySerial->portName();
             // mySerial->clearError();
         }
     }
@@ -125,8 +127,7 @@ void UserSerial::setBaudRate(void) {
 void UserSerial::setPortName(void) {
     QString str1 = ui->comboBox_Port->currentText();
     qDebug() << "选择了:"<<str1.toUtf8().data();
-    //        const QString portnameStr = ui->comboBox_Port->currentText();
-    //       QSerialPortInfo info(portnameStr);
+
     mySerial->setPortName(str1);
 }
 

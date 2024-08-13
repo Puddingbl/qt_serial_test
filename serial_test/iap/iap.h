@@ -30,6 +30,7 @@ public slots:
     void iapReadCommParam(void);
     void iapReadData(void);
     void open_file(void);
+    void iapVB(void);
 
 signals:
 

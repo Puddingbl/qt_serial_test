@@ -1,0 +1,10 @@
+debug/qaesencryption.o
+debug/crc.o
+debug/iap.o
+debug/main.o
+debug/userSerial.o
+debug/widget.o
+debug/moc_qaesencryption.o
+debug/moc_iap.o
+debug/moc_userSerial.o
+debug/moc_widget.o

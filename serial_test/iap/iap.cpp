@@ -77,21 +77,37 @@ bool Iap::parseAndPrintFields(const QString &data) {
     return hasThreeNonEmptyKeys;
 }
 
+uint8_t start_cnt = 0;
+QByteArray start_buff;
+uint8_t start_flag = 0;
+
 void Iap::iapReadCommParam(void) {
     QByteArray rx_buff;
 
     if (mySerial->bytesAvailable()) {
         rx_buff = mySerial->readAll();
-        qDebug()<< "已接收：" << rx_buff;
 
-        parseAndPrintFields(rx_buff);
+        if (static_cast<unsigned char>(rx_buff.at(0)) == 0xaa) {
+            start_flag = 1;
+        }
+
+        if (start_flag) {
+            start_buff.append(rx_buff);
+            if (start_buff.size() == 128) {
+                start_flag = 0;
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+
+        qDebug()<< "已接收：" << start_buff;
+
+        parseAndPrintFields(start_buff);
 
         disconnect(mySerial, &QSerialPort::readyRead, this, &Iap::iapReadCommParam);
         connect(mySerial, &QSerialPort::readyRead, this, &Iap::iapReadData);
-
-        /* 控制字符 */
-        // QString startHexString = "01"; // 十六进制表示
-        // QByteArray byteArray = QByteArray::fromHex(startHexString.toUtf8());
 
         quint8 startChar = 0x01;
         QByteArray byteArray;
@@ -100,8 +116,16 @@ void Iap::iapReadCommParam(void) {
         /* 帧计数 */
         byteArray.append(packCnt++);
 
+        char fileInfo[128];
+
+        sprintf(fileInfo, "name:qwe\n size:%d\n", fileSize);
         /* 文件信息 */
-        byteArray.append("name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name");
+        //byteArray.append("name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe\n size:121\n name:qwe");
+        byteArray.append(fileInfo);
+        QByteArray fillArray;
+        fillArray.fill(static_cast<char>(0x00), 128 - strlen(fileInfo));
+        byteArray.append(fillArray);
+        qDebug()<< "fileInfo:" << fileInfo;
 
         /* CRC */
         quint16 crc = calculateCRC16(byteArray);
@@ -118,10 +142,10 @@ void Iap::iapReadData(void) {
 
     if (mySerial->bytesAvailable()) {
         rx_buff = mySerial->readAll();
-        qDebug()<< "已接收：" << rx_buff.toHex();
+        // qDebug()<< "已接收：" << rx_buff.toHex();
 
         if (endFlag == true) {
-            connect(mySerial, &QSerialPort::readyRead, this, &UserSerial::showData);
+            connect(mySerial, &QSerialPort::readyRead, this, &Iap::iapVB);
             disconnect(mySerial, &QSerialPort::readyRead, this, &Iap::iapReadData);
 
             QByteArray endArray;
@@ -130,19 +154,14 @@ void Iap::iapReadData(void) {
             endArray.append(startChar);
 
             mySerial->write(endArray);
-
+            offset = 0;
+            endFlag = false;
             qDebug() << "结束捏";
+            return;
         }
 
         /* 收到下一帧数据请求 */
         if (!rx_buff.isEmpty() && rx_buff.at(0) == 0x43) {
-
-            qDebug() << "okkkk";
-
-            // if (endFlag == true) {
-            //     return;
-            // }
-
 
             QByteArray byteArray;
             quint8 startChar = 0x02;
@@ -150,15 +169,15 @@ void Iap::iapReadData(void) {
             byteArray.append(startChar);
             byteArray.append(packCnt++);
 
-            int bytesRead = qMin(packLen - 4, fileSize - offset);
+            int bytesRead = qMin(packLen, fileSize - offset);
             byteArray.append(fileDataBuff.mid(offset, bytesRead));
 
-            if (bytesRead < (packLen - 4)) {
+            if (bytesRead < (packLen)) {
                 QByteArray fillArray;
-                int count = packLen - 4 - bytesRead;
+                int count = packLen - bytesRead;
                 qDebug() << "count：" << count;
 
-                fillArray.fill(static_cast<char>(0xaa), count);
+                fillArray.fill(static_cast<char>(0xff), count);
 
                 byteArray.append(fillArray);
                 endFlag = true;
@@ -169,15 +188,52 @@ void Iap::iapReadData(void) {
             byteArray.append(crc >> 8);
             byteArray.append(crc);
 
-            qDebug() << "crc:" << crc;
+            // qDebug() << "crc:" << crc;
 
             mySerial->write(byteArray);
 
             // qDebug() << "byteArray:" << byteArray;
-            qDebug() << "-------------------";
+            // qDebug() << "-------------------";
         }
     }
 }
+
+int vb_cnt = 0;
+QByteArray vb_buff;
+uint8_t vb_flag = 0;
+void Iap::iapVB(void) {
+    QByteArray rx_buff;
+
+    if (mySerial->bytesAvailable()) {
+        rx_buff = mySerial->readAll();
+
+        if (static_cast<unsigned char>(rx_buff.at(0)) == 0xff) {
+            vb_flag = 1;
+            qDebug() << "开始捏";
+        }
+
+        if (vb_flag) {
+            vb_buff.append(rx_buff);
+            vb_cnt++;
+            if (vb_cnt == fileSize) {
+                vb_flag = 0;
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+
+        qDebug() << "来捏:" << vb_cnt;
+        for (int i = 0; i < fileSize; i++) {
+            if (vb_buff.at(i) != fileDataBuff.at(i)) {
+                qDebug() << "i:" << i;
+            }
+        }
+
+    }
+}
+
 
 
 void Iap::open_file() {

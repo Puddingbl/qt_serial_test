@@ -41,6 +41,9 @@ Widget::~Widget()
     if (!this->file) {
         free(this->file);
     }
+    if (!this->ui) {
+        free(this->ui);
+    }
     qDebug()<<"串口已关闭";
 
     delete ui;
