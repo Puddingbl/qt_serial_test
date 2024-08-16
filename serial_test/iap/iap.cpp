@@ -183,7 +183,7 @@ void Iap::iapReadData(void) {
         }
     } break;
 
-    case 0: {
+    case 0: {      
         TransState state = sendFileParamHandle(rx_buff);
         if (state == IAP_TRANING) {
             // transWait = false;
@@ -251,6 +251,7 @@ Iap::TransState Iap::sendFileParamHandle(QByteArray byteArray) {
         }
         step = 0;
 
+        qDebug() << cmdBuff;
         parseAndPrintFields(cmdBuff);
         sendPack(SOH, getFileInfo());
         cmdBuff.clear();
