@@ -31,6 +31,7 @@ public:
 
 private:
     bool openFlag; //串口打开按键标志位
+    QTimer *timerCheckPort;
 
 public slots:
     void onOpenCloseButtonClicked(void);

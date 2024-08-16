@@ -3,6 +3,9 @@
 
 #include "userSerial.h"
 #include <QFileSystemWatcher>
+#include <QTimer>
+
+
 
 #define SOH                     (0x01)  /* start of 128-byte data packet */
 #define STX                     (0x02)  /* start of 1024-byte data packet */
@@ -24,7 +27,8 @@ public:
     typedef enum {
         IAP_TRANING = 0,
         IAP_COMPL,
-        IAP_ERROR
+        IAP_WAIT,
+        IAP_ERROR,
     } TransState;
 
     struct iapFileParam {
@@ -45,16 +49,26 @@ public:
     QByteArray getFileInfo();
     int iapPackCheck(QByteArray byteArray);
 
+    void loadIapFile();
+    void handShakeCheck();
+    void waitCheck();
 private:
+    quint8 transStep = 0;
+
     quint8 packCnt = 0;
     int packDataLen = 128;
 
     struct iapFileParam fileParam;
     QByteArray cmdBuff;
     quint8 endState = 0;
+    bool transWait = false;
 
-    int pack_cnt = 0; // 调试用的参数，不重要
+    // 进度条相关
+    quint32 progressCnt;
+    quint32 progressNum = 0;
 
+    QFileSystemWatcher *watcher; // 监控IAP文件的变化
+    QTimer *timerCheckHS;
 public slots:
     void iapStart(void);
     void iapReadData(void);
@@ -62,8 +76,10 @@ public slots:
 
     void onFileChanged();
     void onDirectoryChanged();
-signals:
 
+    void iapErrorHandle();
+signals:
+    void iapError();
 };
 
 

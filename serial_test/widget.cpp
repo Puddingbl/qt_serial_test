@@ -39,10 +39,10 @@ Widget::~Widget()
 {
 
     if (!this->file) {
-        free(this->file);
+        delete this->file;
     }
     if (!this->ui) {
-        free(this->ui);
+        delete this->ui;
     }
     qDebug()<<"串口已关闭";
 

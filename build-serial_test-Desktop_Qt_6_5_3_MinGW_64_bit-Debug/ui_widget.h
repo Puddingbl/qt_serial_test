@@ -16,6 +16,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTabWidget>
@@ -87,6 +88,7 @@ public:
     QLineEdit *lineEdit_4;
     QLabel *label_15;
     QLineEdit *lineEdit_5;
+    QProgressBar *progressBar;
     QSpacerItem *horizontalSpacer_2;
     QSpacerItem *verticalSpacer_2;
 
@@ -316,6 +318,10 @@ public:
         lineEdit_5 = new QLineEdit(widget_5);
         lineEdit_5->setObjectName("lineEdit_5");
         lineEdit_5->setGeometry(QRect(250, 70, 71, 21));
+        progressBar = new QProgressBar(widget_5);
+        progressBar->setObjectName("progressBar");
+        progressBar->setGeometry(QRect(20, 140, 231, 23));
+        progressBar->setValue(0);
         tabWidget->addTab(widget_5, QString());
 
         gridLayout_4->addWidget(tabWidget, 0, 0, 1, 1);
@@ -334,7 +340,7 @@ public:
 
         retranslateUi(Widget);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Widget);

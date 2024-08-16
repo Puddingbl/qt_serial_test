@@ -36,12 +36,10 @@ UserSerial::UserSerial(Widget *parent)
     qDebug() << str1.toUtf8().data();
     mySerial->setPortName(str1);
 
-    QTimer *timer1 = new QTimer(this);
-
-    timer1->start(500);
-
+    timerCheckPort = new QTimer(this);
+    timerCheckPort->start(500);
     //定时刷新串口列表
-    connect(timer1, &QTimer::timeout, this, &UserSerial::flashComPort);
+    connect(timerCheckPort, &QTimer::timeout, this, &UserSerial::flashComPort);
 
     // 获取串口设置改变值
     connect(ui->comboBox_Baud, &QComboBox::textActivated, this,  &UserSerial::setBaudRate);
@@ -74,9 +72,10 @@ UserSerial::~UserSerial()
     if (mySerial->isOpen()) {
         mySerial->clear();
         mySerial->close();
-        free(mySerial);
-    }
 
+        delete mySerial;
+    }
+    delete timerCheckPort;
     qDebug()<<"串口已关闭";
 }
 
