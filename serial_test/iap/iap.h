@@ -2,6 +2,7 @@
 #define IAP_H
 
 #include "userSerial.h"
+#include <QFileSystemWatcher>
 
 #define SOH                     (0x01)  /* start of 128-byte data packet */
 #define STX                     (0x02)  /* start of 1024-byte data packet */
@@ -20,31 +21,47 @@ public:
     explicit Iap(Widget *parent = nullptr);
     ~Iap();
 
+    typedef enum {
+        IAP_TRANING = 0,
+        IAP_COMPL,
+        IAP_ERROR
+    } TransState;
+
+    struct iapFileParam {
+        QString fileName;
+        int fileSize;
+        int readFileOffset;
+        QByteArray fileDataBuff;
+    };
+
+    TransState sendFileParamHandle(QByteArray byteArray);
+    TransState sendDataHandle(QByteArray byteArray);
+    TransState sendEndHandle(QByteArray byteArray);
+
     bool parseAndPrintFields(const QString &data);
-    void sendFrame();
+    void sendPack(quint8 cmd, QByteArray packData);
+
+    QByteArray getPackData(struct iapFileParam *fileParam);
+    QByteArray getFileInfo();
+    int iapPackCheck(QByteArray byteArray);
 
 private:
     quint8 packCnt = 0;
-    QByteArray fileDataBuff;
-    int fileSize = 0;
-    int startPosition = 0;
-    int offset = 0;
-    int packLen = 128;
+    int packDataLen = 128;
 
-    bool endFlag = false;
-
-    int pack_cnt = 0;
-
-    quint8 state = 0;
+    struct iapFileParam fileParam;
     QByteArray cmdBuff;
+    quint8 endState = 0;
+
+    int pack_cnt = 0; // 调试用的参数，不重要
 
 public slots:
     void iapStart(void);
-    void iapReadCommParam(void);
     void iapReadData(void);
     void open_file(void);
-    // void iapVB(void);
 
+    void onFileChanged();
+    void onDirectoryChanged();
 signals:
 
 };

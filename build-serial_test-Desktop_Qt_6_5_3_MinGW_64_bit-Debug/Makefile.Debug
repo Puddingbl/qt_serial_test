@@ -236,7 +236,7 @@ debug/moc_qaesencryption.cpp: ../serial_test/AES/qaesencryption.h \
 	E:\Application\QT\path\6.5.3\mingw_64\bin\moc.exe $(DEFINES) --include E:/Document/lsx/qt_test2/build-serial_test-Desktop_Qt_6_5_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IE:/Application/QT/path/6.5.3/mingw_64/mkspecs/win32-g++ -IE:/Document/lsx/qt_test2/serial_test -IE:/Application/QT/path/6.5.3/mingw_64/include -IE:/Application/QT/path/6.5.3/mingw_64/include/QtWidgets -IE:/Application/QT/path/6.5.3/mingw_64/include/QtGui -IE:/Application/QT/path/6.5.3/mingw_64/include/QtSerialPort -IE:/Application/QT/path/6.5.3/mingw_64/include/QtCore -I. -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IE:/Application/QT/path/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\serial_test\AES\qaesencryption.h -o debug\moc_qaesencryption.cpp
 
 debug/moc_iap.cpp: ../serial_test/iap/iap.h \
-		../serial_test/widget.h \
+		../serial_test/userSerial.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QWidget \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qwidget.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -394,6 +394,7 @@ debug/moc_iap.cpp: ../serial_test/iap/iap.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QSizeF \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/QTransform \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qnativeinterface.h \
+		../serial_test/widget.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QLineEdit \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qlineedit.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qframe.h \
@@ -420,6 +421,67 @@ debug/moc_iap.cpp: ../serial_test/iap/iap.h \
 		../serial_test/AES/qaesencryption.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QByteArray \
 		../serial_test/crc.h \
+		ui_widget.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QVariant \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QApplication \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qapplication.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qcoreapplication.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qeventloop.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfuture.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfutureinterface.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qmutex.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qtsan_impl.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qresultstore.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfuture_impl.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qthreadpool.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qthread.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qrunnable.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qexception.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qpromise.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qguiapplication.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qinputmethod.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QComboBox \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qcombobox.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qvalidator.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qregularexpression.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qslider.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qstyle.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtabbar.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtabwidget.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qrubberband.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QGroupBox \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qgroupbox.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QLabel \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qlabel.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qpicture.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QPushButton \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qpushbutton.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QSpacerItem \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QTabWidget \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QTextBrowser \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtextbrowser.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtextedit.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QTextEdit \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/QSerialPort \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialport.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialportglobal.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qtserialportexports.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/QSerialPortInfo \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialportinfo.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QString \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QFileSystemWatcher \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfilesystemwatcher.h \
 		debug/moc_predefs.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/bin/moc.exe
 	E:\Application\QT\path\6.5.3\mingw_64\bin\moc.exe $(DEFINES) --include E:/Document/lsx/qt_test2/build-serial_test-Desktop_Qt_6_5_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IE:/Application/QT/path/6.5.3/mingw_64/mkspecs/win32-g++ -IE:/Document/lsx/qt_test2/serial_test -IE:/Application/QT/path/6.5.3/mingw_64/include -IE:/Application/QT/path/6.5.3/mingw_64/include/QtWidgets -IE:/Application/QT/path/6.5.3/mingw_64/include/QtGui -IE:/Application/QT/path/6.5.3/mingw_64/include/QtSerialPort -IE:/Application/QT/path/6.5.3/mingw_64/include/QtCore -I. -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IE:/Application/QT/path/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IE:/Application/QT/path/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\serial_test\iap\iap.h -o debug\moc_iap.cpp
@@ -1143,7 +1205,7 @@ debug/crc.o: ../serial_test/crc.cpp ../serial_test/crc.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\crc.o ..\serial_test\crc.cpp
 
 debug/iap.o: ../serial_test/iap/iap.cpp ../serial_test/iap/iap.h \
-		../serial_test/widget.h \
+		../serial_test/userSerial.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QWidget \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qwidget.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1301,6 +1363,7 @@ debug/iap.o: ../serial_test/iap/iap.cpp ../serial_test/iap/iap.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QSizeF \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/QTransform \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qnativeinterface.h \
+		../serial_test/widget.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QLineEdit \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qlineedit.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qframe.h \
@@ -1326,7 +1389,70 @@ debug/iap.o: ../serial_test/iap/iap.cpp ../serial_test/iap/iap.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qdialog.h \
 		../serial_test/AES/qaesencryption.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QByteArray \
-		../serial_test/crc.h
+		../serial_test/crc.h \
+		ui_widget.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QVariant \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QApplication \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qapplication.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qcoreapplication.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qeventloop.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfuture.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfutureinterface.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qmutex.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qtsan_impl.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qresultstore.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfuture_impl.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qthreadpool.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qthread.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qrunnable.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qexception.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qpromise.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qguiapplication.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qinputmethod.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QComboBox \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qcombobox.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qvalidator.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qregularexpression.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qslider.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qstyle.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtabbar.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtabwidget.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qrubberband.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QGroupBox \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qgroupbox.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QLabel \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qlabel.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtGui/qpicture.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QPushButton \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qpushbutton.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QSpacerItem \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QTabWidget \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QTextBrowser \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtextbrowser.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qtextedit.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QTextEdit \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/QSerialPort \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialport.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialportglobal.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qtserialportexports.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/QSerialPortInfo \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialportinfo.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QString \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QFileSystemWatcher \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfilesystemwatcher.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QSettings \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qsettings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\iap.o ..\serial_test\iap\iap.cpp
 
 debug/main.o: ../serial_test/main.cpp ../../../../Application/QT/path/6.5.3/mingw_64/include/QtWidgets/QApplication \
@@ -1572,7 +1698,10 @@ debug/main.o: ../serial_test/main.cpp ../../../../Application/QT/path/6.5.3/ming
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qtserialportexports.h \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/QSerialPortInfo \
 		../../../../Application/QT/path/6.5.3/mingw_64/include/QtSerialPort/qserialportinfo.h \
-		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QString
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QString \
+		../serial_test/iap/iap.h \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/QFileSystemWatcher \
+		../../../../Application/QT/path/6.5.3/mingw_64/include/QtCore/qfilesystemwatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\serial_test\main.cpp
 
 debug/userSerial.o: ../serial_test/userSerial.cpp ../serial_test/userSerial.h \

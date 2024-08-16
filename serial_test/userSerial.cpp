@@ -13,10 +13,9 @@ UserSerial::UserSerial(Widget *parent)
     mySerial = new QSerialPort(this);
     openFlag = true;
 
-    // mySerial->setParity(QSerialPort::NoParity);
-    // mySerial->setStopBits(QSerialPort::OneStop);
-    // mySerial->setDataBits(QSerialPort::Data8);
-
+    mySerial->setParity(QSerialPort::NoParity);
+    mySerial->setStopBits(QSerialPort::OneStop);
+    mySerial->setDataBits(QSerialPort::Data8);
 
     //获取串口
     //清除串口号
@@ -28,9 +27,14 @@ UserSerial::UserSerial(Widget *parent)
     }
     //设置默认波特率
     ui->comboBox_Baud->setCurrentIndex(3);
+    ui->comboBox_Port->setCurrentIndex(0);
 
     QString str1 = ui->comboBox_Baud->currentText();
     qDebug() << str1.toUtf8().data();
+
+    str1 = ui->comboBox_Port->currentText();
+    qDebug() << str1.toUtf8().data();
+    mySerial->setPortName(str1);
 
     QTimer *timer1 = new QTimer(this);
 
